@@ -3,6 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Google tag (gtag.js) : pasima shop GA4 G-GF9QLCTNTV -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GF9QLCTNTV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GF9QLCTNTV');
+</script>
+
 <title>快眠を探す旅へ | パシーマ</title>
 <style>
 :root{--night:#061329;--night2:#09264a;--ink:#eef7ff;--muted:#a9c1d8;--aqua:#65d8e8;--gold:#ffd16d;--card:rgba(8,31,59,.78);--line:rgba(178,222,255,.16)}
@@ -231,4 +240,43 @@ setTimeout(()=>document.getElementById('intro').classList.add('intro-out'),7875)
 </script>
 
 <section id="featureDetail"><button class="feature-detail-back" id="featureDetailBack">← 診断結果へ戻る</button><article class="feature-detail-card" id="featureDetailCard"></article></section><section id="voices" aria-label="関連する口コミ"><div class="voice-panel"><div class="voice-head"><div><div class="eyebrow" style="color:#356b59">CUSTOMER VOICES</div><h2>同じ悩みを持つ方の声</h2><p>診断結果に関連する口コミを表示しています。カードを押すと企業からの返事に切り替わります。</p></div><button class="back-btn" id="backToResult">診断結果へ戻る</button></div><div id="voiceNotice" class="voice-note"></div><div class="voice-tools"><input id="voiceKeyword" type="search" placeholder="口コミをキーワードで絞り込む"><button id="voiceClear" class="voice-clear">クリア</button></div><div id="voiceTags" class="voice-tags"></div><div id="voiceList" class="voice-grid"></div></div></section>
+
+<!-- GA4 events for Sleep Journey -->
+<script>
+(function(){
+  if (typeof gtag !== 'function') return;
+  var started = false;
+  if (typeof choose === 'function') {
+    var _choose = choose;
+    choose = function(v){
+      if (!started) { started = true; gtag('event', 'diagnosis_start'); }
+      return _choose(v);
+    };
+  }
+  if (typeof renderResults === 'function') {
+    var _renderResults = renderResults;
+    renderResults = function(){
+      gtag('event', 'diagnosis_complete');
+      return _renderResults();
+    };
+  }
+  if (typeof restart === 'function') {
+    var _restart = restart;
+    restart = function(){
+      started = false;
+      gtag('event', 'diagnosis_restart');
+      return _restart();
+    };
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href*="pasima.shop-pro.jp"]') : null;
+    if (a) {
+      gtag('event', 'click_shop', {
+        link_class: a.className || '',
+        link_url: a.href
+      });
+    }
+  }, true);
+})();
+</script>
 </body></html>
